@@ -1,0 +1,84 @@
+
+%
+%
+%
+\section{Բալանսավորված բինար ծառ}
+
+Որոնման բինար ծառը կոչվում է բալանսավորված, եթե նրա բոլոր 
+հանգույցներում ձախ ու աջ ենթածառերի բարձրությունները տարբերվում 
+են ամենաշատը մեկով։
+
+<<BalancedBST դասը>>=
+public class BalancedBST<E extends Comparable<E>> {
+  <<Բալանսավորվող ծառի հանգույցը>>
+  <<Ծառի արմատը>>
+  <<Կոնստրուկտոր>>
+  <<Ավելացնել նոր արժեք>>
+  <<Հեռացնելը տրված արժեքը>>
+  <<Թվարկել բոլոր արժեքները>>
+}
+@
+
+<<Բալանսավորվող ծառի հանգույցը>>=
+potected static class Node<D> {
+  public D data = null;
+  public int count = 1;
+  public int balance = 0;
+  public Node<D> left = null;
+  public Node<D> right = null;
+
+  public Node(D d)
+  {
+    data = d;
+  }
+}
+@
+
+<<Ծառի արմատը>>=
+private Node<E> root = null;
+@
+
+
+<<Կոնստրուկտոր>>=
+public BalancedBST(E... es)
+{
+  for( E e : es )
+    add(e);
+}
+@
+
+%
+%
+\paragraph{Ավելացնել նոր արժեք։} Բալանսավորված որոնման բինար ծառում
+նոր արժեքի ավելացնելը համարյա ոչ մի բանով չի տարբերվում որոնման բինար 
+ծառում արժեք ավելացնելու գործողությունից։ Միակ լրացումն այն է, որ այս 
+դեպքում պետք է նոր հանգույց ավելացնելուց հետո ստուգել ծառի բալանսավորված
+լինելը և անհրաժեշտության դեպքում շտկել խախտումները։ \texttt{add(e,r)} 
+օժանդակ մեթոդի վերջում 
+<<Ավելացնել նոր արժեք>>=
+private Node<E> add(E e, Node<E> r)
+{
+  if( r == null )
+    return new Node<>(e);
+
+  final int cmp = e.compareTo(r.data);
+  if( cmp < 0 )
+    r.left = add(e, r.left);
+  else if( cmp > 0 )
+    r.right = add(e, r.right);
+  else
+    ++r.count;
+
+  return rebalance(r);
+}
+@
+
+<<Տարր ավելացնելը>>=
+public void add(E e)
+{
+  root = add(e, root);
+}
+@
+
+<<Հեռացնելը տրված արժեքը>>=
+@

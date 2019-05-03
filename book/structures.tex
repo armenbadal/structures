@@ -1,0 +1,79 @@
+
+%%\documentclass[a4paper,10pt,draft]{memoir}
+\documentclass[a4paper,10pt]{report}
+\usepackage[top=1in,bottom=1.2in,left=1.2in,right=1in]{geometry}
+
+%\usepackage[Bjornstrup]{fncychap}
+%\usepackage{titlesec}
+
+\usepackage[dvips]{graphicx}
+\usepackage{fontspec}
+\usepackage{noweb}
+
+%% From noweb FAQ
+% Q. There's too much white space at the bottom 
+% of the pages, especially if a code chunk is 
+% followed by a section. How do I fix it?
+%
+% A. Noweb is set up never to break chunks across 
+% pages. You can get better results by relaxing 
+% this constraint, e.g., by
+
+\def\nwendcode{\endtrivlist\endgroup\vfil\penalty10\vfilneg}
+\let\nwdocspar=\smallbreak
+
+%or the even less liberal
+
+%\def\nwendcode{\endtrivlist \endgroup}
+%\let\nwdocspar=\par
+
+
+
+\usepackage{mathabx}
+
+\setmainfont[Ligatures=TeX,HyphenChar="058A]{GHEAMariam}
+\setsansfont[Ligatures=TeX,HyphenChar="058A]{GHEAGrapalat}
+\setmonofont{DejaVu Sans Mono}
+
+%
+% Settings for armenian text
+%
+\renewcommand{\chaptername}{Գլուխ}
+\renewcommand{\contentsname}{Բովանդակություն}
+\renewcommand{\figurename}{Նկար}
+\renewcommand{\tablename}{Աղյուսակ}
+\renewcommand{\appendixname}{Հավելված}
+\renewcommand{\bibname}{Գրականություն}
+\renewcommand{\indexname}{Առարկայական ցանկ}
+
+\tolerance=1500
+%\tolerance=10000 % վատ
+\linespread{1.2}
+\frenchspacing
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+
+\begin{document}
+
+\tableofcontents
+
+\input{aw01-introduction.tex}
+
+%\input{aw02-literate.tex}
+
+
+\input{ch01-linked-lists.tex}
+
+\input{ch02-binary-trees.tex}
+
+\input{ch03-graphs.tex}
+
+\newpage
+%\nocite{*}
+\bibliographystyle{plain}
+\bibliography{strucref} 
+
+\end{document}
+
+
