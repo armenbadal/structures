@@ -9,7 +9,7 @@ weave:
 	noweave -delay -x ch01-doubly-linked.nw > ch01-doubly-linked.tex
 	noweave -delay -x ch02-binary-search-tree.nw > ch02-binary-search-tree.tex
 	noweave -delay -x ch02-balancing-bst.nw > ch02-balancing-bst.tex
-	noweave -delay -x ch03-graph-interface.nw > ch03-graph-interface.tex
+	#noweave -delay -x ch03-graph-interface.nw > ch03-graph-interface.tex
 
 bib:
 	bibtex structures.aux
@@ -30,4 +30,6 @@ code:
 compile:
 	javac structures/BinarySearchTree.java
 
+clean:
+	rm -f *.eps
 
