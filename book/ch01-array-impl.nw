@@ -1,0 +1,52 @@
+\section{Միաչափ զանգված}
+
+Միաչափ զանգվածը կամ վեկտորը տվյալների կառուցվածք է, որի տարրերը
+հաջորդաբար դասավորված են հիշողության անընդհատ տիրույթում։ Տարրերի
+հասանելիության համար օգտագործվում է \(0\)֊ից սկսվող ինդեքսը։
+
+Այստեղ կիրականացնենք \texttt{Array1D} դասը,
+
+<<Array1D դասը>>=
+package structures;
+public class Array1D<E extends Comparable> {
+    <<Տարրերի զանգված>>
+    <<Կոնստրուկտոր>>
+    <<Զանգվածի տարրերի քանակը>>
+    <<Տարրերի հասանելիություն>>
+}
+@
+
+\texttt{Array1D}-ի տարրերը պահելու համար սահմանենք \texttt{elements} հասարակ զանգվածը․
+
+<<Տարրերի զանգված>>=
+private final E[] elements;
+@
+
+
+<<Կոնստրուկտոր>>=
+public Array1D(int size)
+{
+    elements = (E[])new Object[size];
+}
+@
+
+<<Զանգվածի տարրերի քանակը>>=
+public int size()
+{
+    return elements.length;
+}
+@
+
+<<Տարրերի հասանելիություն>>=
+public E get(int index)
+{
+    return elements[index];
+}
+@
+
+<<Տարրերի հասանելիություն>>=
+public void set(int index, E value)
+{
+    elements[index] = value;
+}
+@

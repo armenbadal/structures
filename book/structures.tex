@@ -11,12 +11,12 @@
 \usepackage{noweb}
 
 %% From noweb FAQ
-% Q. There's too much white space at the bottom 
-% of the pages, especially if a code chunk is 
+% Q. There's too much white space at the bottom
+% of the pages, especially if a code chunk is
 % followed by a section. How do I fix it?
 %
-% A. Noweb is set up never to break chunks across 
-% pages. You can get better results by relaxing 
+% A. Noweb is set up never to break chunks across
+% pages. You can get better results by relaxing
 % this constraint, e.g., by
 
 \def\nwendcode{\endtrivlist\endgroup\vfil\penalty10\vfilneg}
@@ -64,18 +64,17 @@
 
 \input{aw03-basictypes.tex}
 
+\input{ch01-arrays.tex}
 
-\input{ch01-linked-lists.tex}
+\input{ch02-linked-lists.tex}
 
-\input{ch02-binary-trees.tex}
+\input{ch03-binary-trees.tex}
 
-\input{ch03-graphs.tex}
+\input{ch04-graphs.tex}
 
 \newpage
 %\nocite{*}
 \bibliographystyle{plain}
-\bibliography{strucref} 
+\bibliography{strucref}
 
 \end{document}
-
-
