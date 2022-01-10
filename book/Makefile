@@ -1,6 +1,6 @@
 
 
-all: weave
+all: weave figures
 	xelatex structures.tex
 	xelatex structures.tex
 
@@ -12,10 +12,10 @@ weave:
 	noweave -delay -x ch03-balancing-bst.nw > ch03-balancing-bst.tex
 	#noweave -delay -x ch03-graph-interface.nw > ch03-graph-interface.tex
 
-bib:
+bib: strucref.bib
 	bibtex structures.aux
 
-figures:
+figures: strucfig.mp
 	mpost strucfig.mp
 
 code:
@@ -27,9 +27,6 @@ code:
 	notangle -R'BinarySearchTree դասը' ch02-binary-search-tree.nw > structures/BinarySearchTree.java
 	notangle -R'BalancedBST դասը' ch02-balancing-bst.nw > structures/BalancedBST.java
 
-
-compile:
-	javac structures/BinarySearchTree.java
 
 clean:
 	rm *.log
