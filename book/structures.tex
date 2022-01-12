@@ -35,9 +35,6 @@
 \setsansfont[Ligatures=TeX,HyphenChar="058A]{GHEAGrapalat}
 \setmonofont{DejaVu Sans Mono}
 
-%
-% Settings for armenian text
-%
 \renewcommand{\chaptername}{Գլուխ}
 \renewcommand{\contentsname}{Բովանդակություն}
 \renewcommand{\figurename}{Նկար}
@@ -56,11 +53,13 @@
 
 \begin{document}
 
+\input{titlepage.tex}
+
 \tableofcontents
 
-\input{aw01-introduction.tex}
+\input{aw00-preface.tex}
 
-%\input{aw02-literate.tex}
+\input{aw01-introduction.tex}
 
 \input{aw03-basictypes.tex}
 
@@ -72,7 +71,7 @@
 
 \input{ch04-graphs.tex}
 
-\input{ch04-automata.tex}
+\input{ch05-automata.tex}
 
 
 \newpage
