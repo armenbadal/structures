@@ -9,6 +9,7 @@
 են ամենաշատը մեկով։
 
 <<BalancedBST դասը>>=
+package structures;
 public class BalancedBST<E extends Comparable<E>> {
   <<Բալանսավորվող ծառի հանգույցը>>
   <<Ծառի արմատը>>
@@ -20,7 +21,7 @@ public class BalancedBST<E extends Comparable<E>> {
 @
 
 <<Բալանսավորվող ծառի հանգույցը>>=
-potected static class Node<D> {
+protected static class Node<D> {
   public D data = null;
   public int count = 1;
   public int balance = 0;
@@ -81,4 +82,7 @@ public void add(E e)
 @
 
 <<Հեռացնելը տրված արժեքը>>=
+@
+
+<<Թվարկել բոլոր արժեքները>>=
 @

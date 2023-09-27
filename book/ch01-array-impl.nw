@@ -13,40 +13,60 @@ public class Array1D<E extends Comparable> {
     <<Կոնստրուկտոր>>
     <<Զանգվածի տարրերի քանակը>>
     <<Տարրերի հասանելիություն>>
+    <<Գծային որոնում>>
+    <<Բինար որոնում>>
 }
 @
 
-\texttt{Array1D}-ի տարրերը պահելու համար սահմանենք \texttt{elements} հասարակ զանգվածը․
+\texttt{Array1D}-ի տարրերը պահելու համար սահմանենք \texttt{elements} 
+հասարակ զանգվածը․
 
 <<Տարրերի զանգված>>=
 private final E[] elements;
 @
 
-
 <<Կոնստրուկտոր>>=
-public Array1D(int size)
-{
+public Array1D(int size) {
     elements = (E[])new Object[size];
 }
 @
 
 <<Զանգվածի տարրերի քանակը>>=
-public int size()
-{
+public int size() {
     return elements.length;
 }
 @
 
 <<Տարրերի հասանելիություն>>=
-public E get(int index)
-{
+public E get(int index) {
     return elements[index];
 }
 @
 
 <<Տարրերի հասանելիություն>>=
-public void set(int index, E value)
-{
+public void set(int index, E value) {
     elements[index] = value;
 }
 @
+
+<<Գծային որոնում>>=
+public int search(E value) {
+    for( int i = 0; i < size(); ++i )
+        if( get(i).equals(value) )
+            return i;
+    
+    return -1;
+}
+@
+
+<<Բինար որոնում>>=
+public int binarySearch(E value) {
+    return binarySearchHelper(0, size()-1, value);
+}
+
+private int binarySearchHelper(int l, int r, E v) {
+    int m = (l + r) / 2;
+    if( m == v ) return 0;
+}
+@
+

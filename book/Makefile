@@ -1,5 +1,3 @@
-
-
 all: weave figures
 	xelatex structures.tex
 	xelatex structures.tex
@@ -20,12 +18,13 @@ figures: strucfig.mp
 
 code:
 	rm -rf structures/*.*
-	notangle -R'SinglyLinked դասը' ch01-singly-linked.nw > structures/SinglyLinked.java
-	notangle -R'SinglyLinkedRecursive դասը' ch01-singly-linked.nw > structures/SinglyLinkedRecursive.java
-	notangle -R'SinglyLinkedIterative դասը' ch01-singly-linked.nw > structures/SinglyLinkedIterative.java
-	notangle -R'DoublyLinkedList դասը' ch01-doubly-linked.nw > structures/DoublyLinkedList.java
-	notangle -R'BinarySearchTree դասը' ch02-binary-search-tree.nw > structures/BinarySearchTree.java
-	notangle -R'BalancedBST դասը' ch02-balancing-bst.nw > structures/BalancedBST.java
+	notangle -R'Array1D դասը' ch01-array-impl.nw > structures/Array1D.java
+	notangle -R'SinglyLinked դասը' ch02-singly-linked.nw > structures/SinglyLinked.java
+	notangle -R'SinglyLinkedRecursive դասը' ch02-singly-linked.nw > structures/SinglyLinkedRecursive.java
+	notangle -R'SinglyLinkedIterative դասը' ch02-singly-linked.nw > structures/SinglyLinkedIterative.java
+	notangle -R'DoublyLinkedList դասը' ch02-doubly-linked.nw > structures/DoublyLinkedList.java
+	notangle -R'BinarySearchTree դասը' ch03-binary-search-tree.nw > structures/BinarySearchTree.java
+	notangle -R'BalancedBST դասը' ch03-balancing-bst.nw > structures/BalancedBST.java
 
 
 clean:

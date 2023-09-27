@@ -47,26 +47,26 @@
 ինտերֆեյսը, որը հնարավորություն է տալիս ցուցակի տարրերը 
 թվարկել \textit{for-each} տիպի ցիկլի օգնությամբ։
 
-<<DoublyLinkedList դասը>>=
+\nwfilename{ch02-doubly-linked.nw}\nwbegincode{1}\sublabel{NW1noxYC-3jzw8Y-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW1noxYC-3jzw8Y-1}}}\moddef{DoublyLinkedList դասը~{\nwtagstyle{}\subpageref{NW1noxYC-3jzw8Y-1}}}\endmoddef\nwnotused{DoublyLinkedList\ դասը}
 package structures;
 import java.util.Iterator;
 public class DoublyLinkedList<E> 
-    implements Iterable<E> {
-  <<Երկկապ ցուցակի հանգույցը>>
-  <<Ցուցակի սկիզբն ու վերջը>>
-  <<Ցուցակի երկարությունը>>
-  <<Դատա՞րկ է արդյոք ցուցակը>>
-  <<Տարրն ավելացնել սկզբից>>
-  <<Տարրն ավելացնել վերջից>>
-  <<Հեռացնել առաջին տարրը>>
-  <<Հեռացնել վերջին տարրը>>
-  <<Հեռացնել տրված արժեքները>>
-  <<Հեռացնել նշված հանգույցը>>
-  <<Որոնել տրված արժեքը>>
-  <<Շրջել ցուցակը>>
-  <<Իտերատորի իրականացումը>>
-}
-@ 
+    implements Iterable<E> \{
+  \LA{}Երկկապ ցուցակի հանգույցը~{\nwtagstyle{}\subpageref{NW1noxYC-1hQfEd-1}}\RA{}
+  \LA{}Ցուցակի սկիզբն ու վերջը~{\nwtagstyle{}\subpageref{NW1noxYC-E6sHq-1}}\RA{}
+  \LA{}Ցուցակի երկարությունը~{\nwtagstyle{}\subpageref{NW1noxYC-1uI1Pq-1}}\RA{}
+  \LA{}Դատա՞րկ է արդյոք ցուցակը~{\nwtagstyle{}\subpageref{NW1noxYC-6nvrM-1}}\RA{}
+  \LA{}Տարրն ավելացնել սկզբից~{\nwtagstyle{}\subpageref{NW1noxYC-cBZlg-1}}\RA{}
+  \LA{}Տարրն ավելացնել վերջից~{\nwtagstyle{}\subpageref{NW1noxYC-cBZlg.2-1}}\RA{}
+  \LA{}Հեռացնել առաջին տարրը~{\nwtagstyle{}\subpageref{NW1noxYC-2X2nTk-1}}\RA{}
+  \LA{}Հեռացնել վերջին տարրը~{\nwtagstyle{}\subpageref{NW1noxYC-2X2nTk.2-1}}\RA{}
+  \LA{}Հեռացնել տրված արժեքները~{\nwtagstyle{}\subpageref{NW1noxYC-11HqxT.2-1}}\RA{}
+  \LA{}Հեռացնել նշված հանգույցը~{\nwtagstyle{}\subpageref{NW1noxYC-11HqxT-1}}\RA{}
+  \LA{}Որոնել տրված արժեքը~{\nwtagstyle{}\subpageref{NW1noxYC-4VGAMM-1}}\RA{}
+  \LA{}Շրջել ցուցակը~{\nwtagstyle{}\subpageref{NW1noxYC-MMD3K-1}}\RA{}
+  \LA{}Իտերատորի իրականացումը~{\nwtagstyle{}\subpageref{NW1noxYC-2XgkLC-1}}\RA{}
+\}
+\nwendcode{}\nwbegindocs{2}\nwdocspar
 
 
 %
@@ -79,26 +79,26 @@ public class DoublyLinkedList<E>
 նախորդ հանգույցի կապն է, և \texttt{next} ցուցիչն էլ 
 հաջորդ հանգույցի կապն է։ \texttt{Node} ներդրված դասը
 սահմանել եմ հետևյալ կերպ․
-<<Երկկապ ցուցակի հանգույցը>>=
-private class Node {
+\nwenddocs{}\nwbegincode{3}\sublabel{NW1noxYC-1hQfEd-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW1noxYC-1hQfEd-1}}}\moddef{Երկկապ ցուցակի հանգույցը~{\nwtagstyle{}\subpageref{NW1noxYC-1hQfEd-1}}}\endmoddef\nwused{\\{NW1noxYC-3jzw8Y-1}}
+private class Node \{
   public E data = null;
   public Node previous = null;
   public Node next = null;
 
   public Node(E d)
-  { data = d; }
-} 
-@
+  \{ data = d; \}
+\} 
+\nwendcode{}\nwbegindocs{4}\nwdocspar
 
 %
 \paragraph{Հղումներ ցուցակի սկզբին ու վերջին:}
 Ցուցակի սկիզբն ու վերջը (գլուխն ու պոչը) որոշվում են
 համապատասխանաբար \texttt{head} և \texttt{tail} ցուցիչներով։ 
 Երբ ցուցակը դատարկ է, սրանց երկուսի արժեքն էլ \(\boxslash\) է։
-<<Ցուցակի սկիզբն ու վերջը>>=
+\nwenddocs{}\nwbegincode{5}\sublabel{NW1noxYC-E6sHq-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW1noxYC-E6sHq-1}}}\moddef{Ցուցակի սկիզբն ու վերջը~{\nwtagstyle{}\subpageref{NW1noxYC-E6sHq-1}}}\endmoddef\nwused{\\{NW1noxYC-3jzw8Y-1}}
 private Node head = null;
 private Node tail = null;
-@
+\nwendcode{}\nwbegindocs{6}\nwdocspar
 
 %
 \paragraph{Ցուցակի երկարությունը։}
@@ -107,29 +107,29 @@ private Node tail = null;
 պակասում։ Սա հնարավորություն է տալիս ցուցակի երկարությունը
 ստանալ՝ առանց \texttt{head}֊ից \texttt{tail} անցնելու և 
 հանգույցները հաշվելու։ 
-<<Ցուցակի երկարությունը>>=
+\nwenddocs{}\nwbegincode{7}\sublabel{NW1noxYC-1uI1Pq-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW1noxYC-1uI1Pq-1}}}\moddef{Ցուցակի երկարությունը~{\nwtagstyle{}\subpageref{NW1noxYC-1uI1Pq-1}}}\endmoddef\nwalsodefined{\\{NW1noxYC-1uI1Pq-2}}\nwused{\\{NW1noxYC-3jzw8Y-1}}
 private int count = 0;
-@
+\nwendcode{}\nwbegindocs{8}\nwdocspar
 Այս հաշվիչի արժեքը որպես ցուցակի երկարություն վերադարձնում
 է \texttt{length()} մեթոդը։
-<<Ցուցակի երկարությունը>>=
+\nwenddocs{}\nwbegincode{9}\sublabel{NW1noxYC-1uI1Pq-2}\nwmargintag{{\nwtagstyle{}\subpageref{NW1noxYC-1uI1Pq-2}}}\moddef{Ցուցակի երկարությունը~{\nwtagstyle{}\subpageref{NW1noxYC-1uI1Pq-1}}}\plusendmoddef
 public int length()
-{
+\{
   return count;
-}
-@ 
+\}
+\nwendcode{}\nwbegindocs{10}\nwdocspar
 
 %
 \paragraph{Ցուցակի դատարկ լինելը։}
 Կարելի է դուրս բերել երկու պայմաններից․ 
 \(head\equiv\boxslash\wedge tail\equiv\boxslash\) կամ
 \(count=0\)։ Երկրորդն ավելի պարզ է, թող որ դա լինի․
-<<Դատա՞րկ է արդյոք ցուցակը>>=
+\nwenddocs{}\nwbegincode{11}\sublabel{NW1noxYC-6nvrM-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW1noxYC-6nvrM-1}}}\moddef{Դատա՞րկ է արդյոք ցուցակը~{\nwtagstyle{}\subpageref{NW1noxYC-6nvrM-1}}}\endmoddef\nwused{\\{NW1noxYC-3jzw8Y-1}}
 public boolean isEmpty()
-{
+\{
   return 0 == count;
-}
-@
+\}
+\nwendcode{}\nwbegindocs{12}\nwdocspar
 
 %
 \paragraph{Տարրն ավելացնել սկզբից և վերջից։}
@@ -150,22 +150,22 @@ public boolean isEmpty()
 հանգույցը, բայց այն դեռ կապված չէ ցուցակին։ Աջ կողմում 
 արդեն ցույց  տրված, թե ինպես է նոր ստեղծված հանգույցը
 դարձել ցուցակի առաջին հանգույց։
-<<Տարրն ավելացնել սկզբից>>=
+\nwenddocs{}\nwbegincode{13}\sublabel{NW1noxYC-cBZlg-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW1noxYC-cBZlg-1}}}\moddef{Տարրն ավելացնել սկզբից~{\nwtagstyle{}\subpageref{NW1noxYC-cBZlg-1}}}\endmoddef\nwused{\\{NW1noxYC-3jzw8Y-1}}
 public void addFront(E e)
-{
+\{
   Node nno = new Node(e);
-  if( isEmpty() ) {
+  if( isEmpty() ) \{
     head = nno;
     tail = nno;
-  }
-  else {
+  \}
+  else \{
     nno.next = head;
     head.previous = nno;
     head = nno;
-  }
+  \}
   ++count;
-}
-@
+\}
+\nwendcode{}\nwbegindocs{14}\nwdocspar
 Նմանատիպ քայլեր են կատարվում ցուցակի վերջում նոր հանգույց 
 ավելացնելու ժամանակ։ \texttt{tail}֊ի \texttt{next}֊ը կապվում 
 է նոր հանգույցին, հետո նոր հանգույցի \texttt{previous}֊ը 
@@ -175,22 +175,22 @@ public void addFront(E e)
 \centering
 \includegraphics{struc-fig-14.eps}
 \end{figure}
-<<Տարրն ավելացնել վերջից>>=
+\nwenddocs{}\nwbegincode{15}\sublabel{NW1noxYC-cBZlg.2-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW1noxYC-cBZlg.2-1}}}\moddef{Տարրն ավելացնել վերջից~{\nwtagstyle{}\subpageref{NW1noxYC-cBZlg.2-1}}}\endmoddef\nwused{\\{NW1noxYC-3jzw8Y-1}}
 public void addBack(E e)
-{
+\{
   Node nno = new Node(e);
-  if( isEmpty() ) {
+  if( isEmpty() ) \{
     head = nno;
     tail = nno;
-  }
-  else {
+  \}
+  else \{
     tail.next = nno;
     nno.previous = tail;
     tail = nno;
-  }
+  \}
   ++count;
-}
-@
+\}
+\nwendcode{}\nwbegindocs{16}\nwdocspar
 
 %
 \paragraph{Հեռացնել նշված հանգույցը։}
@@ -204,65 +204,65 @@ public void addBack(E e)
 \centering
 \includegraphics{struc-fig-15.eps}
 \end{figure}
-<<Հեռացնել նշված հանգույցը>>=
+\nwenddocs{}\nwbegincode{17}\sublabel{NW1noxYC-11HqxT-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW1noxYC-11HqxT-1}}}\moddef{Հեռացնել նշված հանգույցը~{\nwtagstyle{}\subpageref{NW1noxYC-11HqxT-1}}}\endmoddef\nwused{\\{NW1noxYC-3jzw8Y-1}}
 private void removeNode(Node p)
-{
-  <<Եթե հաջորդող ունի>>
-  <<Եթե նախորդող ունի>>
-  <<Ճշգրտել head֊ը և tail֊ը>>
+\{
+  \LA{}Եթե հաջորդող ունի~{\nwtagstyle{}\subpageref{NW1noxYC-40brSY-1}}\RA{}
+  \LA{}Եթե նախորդող ունի~{\nwtagstyle{}\subpageref{NW1noxYC-40brSY.2-1}}\RA{}
+  \LA{}Ճշգրտել head֊ը և tail֊ը~{\nwtagstyle{}\subpageref{NW1noxYC-2wf3g6-1}}\RA{}
   --count;
-}
-@
+\}
+\nwendcode{}\nwbegindocs{18}\nwdocspar
 Եթե հեռացվող հանգույցը վերջինը չէ (հաջորդող ունի), ապա
 պետք է այդ հաջորդողը կապել հեռացվողի նախորդ հանգույցին։
-<<Եթե հաջորդող ունի>>=
+\nwenddocs{}\nwbegincode{19}\sublabel{NW1noxYC-40brSY-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW1noxYC-40brSY-1}}}\moddef{Եթե հաջորդող ունի~{\nwtagstyle{}\subpageref{NW1noxYC-40brSY-1}}}\endmoddef\nwused{\\{NW1noxYC-11HqxT-1}}
 if( p.next != null )
   p.next.previous = p.previous;
-@
+\nwendcode{}\nwbegindocs{20}\nwdocspar
 Եթե հեռացվող հանգույցը առաջինը չէ (նախորդող ունի), ապա
 պետք է այդ նախորդողը կապել հեռացվողի հաջորդ հանգույցին։
-<<Եթե նախորդող ունի>>=
+\nwenddocs{}\nwbegincode{21}\sublabel{NW1noxYC-40brSY.2-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW1noxYC-40brSY.2-1}}}\moddef{Եթե նախորդող ունի~{\nwtagstyle{}\subpageref{NW1noxYC-40brSY.2-1}}}\endmoddef\nwused{\\{NW1noxYC-11HqxT-1}}
 if( p.previous != null )
   p.previous.next = p.next;
-@
+\nwendcode{}\nwbegindocs{22}\nwdocspar
 Եթե հեռացվողը առաջին հանգույցն էր, ապա \texttt{head}֊ը
 տեղափոխել իր հաջորդի վրա։ Իսկ եթե հեռացվողը վերջին 
 հանգույցն էր, ապա \texttt{tail}֊ը տեղափոխել իր նախորդի 
 վրա։
-<<Ճշգրտել head֊ը և tail֊ը>>=
+\nwenddocs{}\nwbegincode{23}\sublabel{NW1noxYC-2wf3g6-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW1noxYC-2wf3g6-1}}}\moddef{Ճշգրտել head֊ը և tail֊ը~{\nwtagstyle{}\subpageref{NW1noxYC-2wf3g6-1}}}\endmoddef\nwused{\\{NW1noxYC-11HqxT-1}}
 if( p == head )
   head = head.next;
 if( p == tail )
   tail = tail.previous;
-@
+\nwendcode{}\nwbegindocs{24}\nwdocspar
 
 %
 %
 \paragraph{Հեռացնել առաջին կամ վերջին հանգույցը։}
-<<Հեռացնել առաջին տարրը>>=
+\nwenddocs{}\nwbegincode{25}\sublabel{NW1noxYC-2X2nTk-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW1noxYC-2X2nTk-1}}}\moddef{Հեռացնել առաջին տարրը~{\nwtagstyle{}\subpageref{NW1noxYC-2X2nTk-1}}}\endmoddef\nwused{\\{NW1noxYC-3jzw8Y-1}}
 public E removeFront()
-{
+\{
   if( isEmpty() )
     return null;
 
   E res = head.data;
   removeNode(head);
   return res;
-}
-@
+\}
+\nwendcode{}\nwbegindocs{26}\nwdocspar
 Ճիշտ նույնպիսի քայլեր են կատարվում ցուցակի վերջին հանգույցը
 հեռացնելու համար։
-<<Հեռացնել վերջին տարրը>>=
+\nwenddocs{}\nwbegincode{27}\sublabel{NW1noxYC-2X2nTk.2-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW1noxYC-2X2nTk.2-1}}}\moddef{Հեռացնել վերջին տարրը~{\nwtagstyle{}\subpageref{NW1noxYC-2X2nTk.2-1}}}\endmoddef\nwused{\\{NW1noxYC-3jzw8Y-1}}
 public E removeBack()
-{
+\{
   if( isEmpty() )
     return null;
 
   E res = tail.data;
   removeNode(tail);
   return res;
-}
-@
+\}
+\nwendcode{}\nwbegindocs{28}\nwdocspar
 
 
 %
@@ -273,9 +273,9 @@ public E removeBack()
 եմ Վիրտի առաջարկած պատնեշի հնարքը։ Դրա համար, որոնումը 
 սկսելուց առաջ, ցուցակի պոչից կցում եմ մի նոր հանգույց՝ որոնելի 
 \texttt{e} արժեքով։  
-<<Որոնել տրված արժեքը>>=
+\nwenddocs{}\nwbegincode{29}\sublabel{NW1noxYC-4VGAMM-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW1noxYC-4VGAMM-1}}}\moddef{Որոնել տրված արժեքը~{\nwtagstyle{}\subpageref{NW1noxYC-4VGAMM-1}}}\endmoddef\nwused{\\{NW1noxYC-3jzw8Y-1}}
 public boolean contains(E e)
-{
+\{
   if( isEmpty() )
     return false;
 
@@ -288,23 +288,23 @@ public boolean contains(E e)
   tail.next = null;
 
   return p != sentinel;
-}
-@
+\}
+\nwendcode{}\nwbegindocs{30}\nwdocspar
 
 %
 %
 \paragraph{Հեռացնել տրված արժեքով բոլոր հանգույցները։}
-<<Հեռացնել տրված արժեքները>>=
+\nwenddocs{}\nwbegincode{31}\sublabel{NW1noxYC-11HqxT.2-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW1noxYC-11HqxT.2-1}}}\moddef{Հեռացնել տրված արժեքները~{\nwtagstyle{}\subpageref{NW1noxYC-11HqxT.2-1}}}\endmoddef\nwused{\\{NW1noxYC-3jzw8Y-1}}
 public void removeAll(E e)
-{
+\{
   Node p = head;
-  while( p != null ) {
+  while( p != null ) \{
     if( e.equals(p.data) )
       removeNode(p);
     p = p.next;
-  }    
-}
-@
+  \}    
+\}
+\nwendcode{}\nwbegindocs{32}\nwdocspar
 
 %
 %
@@ -312,39 +312,58 @@ public void removeAll(E e)
 Ակնհայտ է, որ երկկապ ցուցակը շրջելու համար պետք է 
 պարզապես տեղերով փոխել \texttt{head} և \texttt{tail}
 ցուիչները։
-<<Շրջել ցուցակը>>=
+\nwenddocs{}\nwbegincode{33}\sublabel{NW1noxYC-MMD3K-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW1noxYC-MMD3K-1}}}\moddef{Շրջել ցուցակը~{\nwtagstyle{}\subpageref{NW1noxYC-MMD3K-1}}}\endmoddef\nwused{\\{NW1noxYC-3jzw8Y-1}}
 public void reverse()
-{
+\{
   Node temp = head;
   head = tail;
   tail = temp;
-}
-@
+\}
+\nwendcode{}\nwbegindocs{34}\nwdocspar
 
 %
 %
 \paragraph{Հանգույցներով անցնող իտերատորը։}
-<<Իտերատորի իրականացումը>>=
+\nwenddocs{}\nwbegincode{35}\sublabel{NW1noxYC-2XgkLC-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW1noxYC-2XgkLC-1}}}\moddef{Իտերատորի իրականացումը~{\nwtagstyle{}\subpageref{NW1noxYC-2XgkLC-1}}}\endmoddef\nwused{\\{NW1noxYC-3jzw8Y-1}}
 public Iterator<E> iterator()
-{
+\{
   return new DoublyIterator();
-}
+\}
 
 private class DoublyIterator
-    implements Iterator<E> {
+    implements Iterator<E> \{
   private Node cursor = head;
   public boolean hasNext()
-  {
+  \{
     return cursor != null;
-  }
+  \}
   public E next()
-  {
+  \{
     E res = cursor.data;
     cursor = cursor.next;
     return res;
-  }
-}
-@
+  \}
+\}
+\nwendcode{}
+
+\nwixlogsorted{c}{{DoublyLinkedList դասը}{NW1noxYC-3jzw8Y-1}{\nwixd{NW1noxYC-3jzw8Y-1}}}%
+\nwixlogsorted{c}{{Դատա՞րկ է արդյոք ցուցակը}{NW1noxYC-6nvrM-1}{\nwixu{NW1noxYC-3jzw8Y-1}\nwixd{NW1noxYC-6nvrM-1}}}%
+\nwixlogsorted{c}{{Եթե հաջորդող ունի}{NW1noxYC-40brSY-1}{\nwixu{NW1noxYC-11HqxT-1}\nwixd{NW1noxYC-40brSY-1}}}%
+\nwixlogsorted{c}{{Եթե նախորդող ունի}{NW1noxYC-40brSY.2-1}{\nwixu{NW1noxYC-11HqxT-1}\nwixd{NW1noxYC-40brSY.2-1}}}%
+\nwixlogsorted{c}{{Երկկապ ցուցակի հանգույցը}{NW1noxYC-1hQfEd-1}{\nwixu{NW1noxYC-3jzw8Y-1}\nwixd{NW1noxYC-1hQfEd-1}}}%
+\nwixlogsorted{c}{{Իտերատորի իրականացումը}{NW1noxYC-2XgkLC-1}{\nwixu{NW1noxYC-3jzw8Y-1}\nwixd{NW1noxYC-2XgkLC-1}}}%
+\nwixlogsorted{c}{{Հեռացնել առաջին տարրը}{NW1noxYC-2X2nTk-1}{\nwixu{NW1noxYC-3jzw8Y-1}\nwixd{NW1noxYC-2X2nTk-1}}}%
+\nwixlogsorted{c}{{Հեռացնել նշված հանգույցը}{NW1noxYC-11HqxT-1}{\nwixu{NW1noxYC-3jzw8Y-1}\nwixd{NW1noxYC-11HqxT-1}}}%
+\nwixlogsorted{c}{{Հեռացնել վերջին տարրը}{NW1noxYC-2X2nTk.2-1}{\nwixu{NW1noxYC-3jzw8Y-1}\nwixd{NW1noxYC-2X2nTk.2-1}}}%
+\nwixlogsorted{c}{{Հեռացնել տրված արժեքները}{NW1noxYC-11HqxT.2-1}{\nwixu{NW1noxYC-3jzw8Y-1}\nwixd{NW1noxYC-11HqxT.2-1}}}%
+\nwixlogsorted{c}{{Ճշգրտել head֊ը և tail֊ը}{NW1noxYC-2wf3g6-1}{\nwixu{NW1noxYC-11HqxT-1}\nwixd{NW1noxYC-2wf3g6-1}}}%
+\nwixlogsorted{c}{{Շրջել ցուցակը}{NW1noxYC-MMD3K-1}{\nwixu{NW1noxYC-3jzw8Y-1}\nwixd{NW1noxYC-MMD3K-1}}}%
+\nwixlogsorted{c}{{Որոնել տրված արժեքը}{NW1noxYC-4VGAMM-1}{\nwixu{NW1noxYC-3jzw8Y-1}\nwixd{NW1noxYC-4VGAMM-1}}}%
+\nwixlogsorted{c}{{Տարրն ավելացնել սկզբից}{NW1noxYC-cBZlg-1}{\nwixu{NW1noxYC-3jzw8Y-1}\nwixd{NW1noxYC-cBZlg-1}}}%
+\nwixlogsorted{c}{{Տարրն ավելացնել վերջից}{NW1noxYC-cBZlg.2-1}{\nwixu{NW1noxYC-3jzw8Y-1}\nwixd{NW1noxYC-cBZlg.2-1}}}%
+\nwixlogsorted{c}{{Ցուցակի երկարությունը}{NW1noxYC-1uI1Pq-1}{\nwixu{NW1noxYC-3jzw8Y-1}\nwixd{NW1noxYC-1uI1Pq-1}\nwixd{NW1noxYC-1uI1Pq-2}}}%
+\nwixlogsorted{c}{{Ցուցակի սկիզբն ու վերջը}{NW1noxYC-E6sHq-1}{\nwixu{NW1noxYC-3jzw8Y-1}\nwixd{NW1noxYC-E6sHq-1}}}%
+\nwbegindocs{36}\nwdocspar
 
 
 %
@@ -353,3 +372,4 @@ private class DoublyIterator
 
 --հերթ--
 
+\nwenddocs{}

@@ -1,0 +1,723 @@
+
+%
+%
+\section{Միակապ ցուցակ}
+\label{sec:singly}
+
+\emph{Միակապ ցուցակը} հանգույցների շղթա է, որտեղ ամեն մի 
+հանգույցը պարունակում է երկու պարտադիր դաշտ։ Մեկը տվյալ 
+հանգույցը բնութագրող \emph{տվյալների} դաշտն է՝ (\emph{data}), 
+որը երբեմն անվանում են նաև հանգույցի \emph{բանալի} 
+(\emph{key})՝ ընդգծելով նրա բնութագրիչ դերը հանգույցի համար։ 
+Մյուսը նույնանման հանգույցի \emph{ցուցիչն} է՝ (\emph{next}), 
+որի օգնությամբ կապ է ստեղծում ցուցակի երկու տարրերի միջև։ 
+Միակապ հանգույցը սովորաբար պատկերվում է երկու կեսերից 
+բաղկացած ուղղանկյան տեսքով․
+
+\begin{figure}[h]
+\centering
+\includegraphics{struc-fig-1.eps}
+\end{figure}
+
+Իսկ, օրինակ, \(a_0\), \(a_1\), \(a_2\) և \(a_3\) տարրերի
+միակապ ցուցակն էլ պատկերվում է այսպիսի հանգույցների շղթայի 
+տեսքով, որտեղ \emph{head}֊ը առաջին հանգույցի ցուցիչն է, իսկ 
+\(\boxslash\) սիմվոլով նշված է \emph{զրոյական} («դատարկ») 
+ցուցիչը։
+
+\begin{figure}[h]
+\centering
+\includegraphics{struc-fig-2.eps}
+\end{figure}
+
+Այս նկարագրությունից պարզ է, որ միակապ ցուցակն ունի \emph{անդրադարձ} 
+(ռեկուրսիվ) կառուցվածք և կարող է սահմանվել անդրադարձ եղանակով։ 
+Միակապ ցուցակը կամ դատարկ է՝ \(head\rightarrow\boxslash\), կամ էլ 
+միակապ հանգույց է, որի \emph{data} դաշտում իմաստալից ինֆորմացիան է, 
+իսկ \emph{next} դաշտը նորից միակապ ցուցակի ցուցիչ է։ Ոչ դատարկ 
+ցուցակում առաջին հանգույցն անվանում են \emph{գլուխ} (\emph{head}), 
+իսկ առաջին հանգույցին հաջորդող ցուցակին՝ \emph{պոչ} (\emph{tail})։
+
+\medskip
+Ես պատրաստվում եմ միակապ ցուցակի հետ կատարվող գործողությունների 
+իրականացումը ներկայացնել և՛ ռեկուրսիվ, և՛ իտերատիվ եղանակներով։
+Երկու իրականացումներում էլ նույնն են թե՛ ներքին կառուցվածքը, թե՛
+ինտերֆեյսը։ Եվ որպեսզի նվազագույնի հասցնեմ ծրագրային տեքստն ու 
+դրան ուղեկցող նկարագրությունները, նախ՝ կնկարագրեմ 
+\texttt{SinglyLinked} վերացական (abstract) դասը, ապա այն 
+կկոնկրետացնեմ \texttt{SinlyLinkedRecursive} և
+\texttt{SinglyLinkedIterative} դասերով։
+
+
+%
+%
+\subsection{\texttt{SinglyLinked} վերացական դասը}
+
+\texttt{SynglyLinked}-ը ընդհանրացված աբստրակտ դաս է՝ \texttt{E} 
+տիպի պարամետրով։ Այն պարունակում է միակապ հանգույցի սահմանումը, 
+ցուցակի առաջին հանգույցին կապված \texttt{head} հղումը և 
+գործողությունները մոդելավորող մեթոդների հայտարարությունները։ 
+Այն գործողությունները, որոնք նույնն են և՛ ռեկուրսիվ, և՛ իտերատիվ 
+տարբերակներում, ես իրականացրել եմ այս դասում, մյուս 
+գործողությունները հայտարաարել եմ որպես աբստրակտ մեթոդներ։
+\nwfilename{ch02-singly-linked.nw}\nwbegincode{1}\sublabel{NW3BO1cf-1Zd7Ww-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BO1cf-1Zd7Ww-1}}}\moddef{SinglyLinked դասը~{\nwtagstyle{}\subpageref{NW3BO1cf-1Zd7Ww-1}}}\endmoddef\nwnotused{SinglyLinked\ դասը}
+package structures;
+import java.util.function.Consumer;
+public abstract class SinglyLinked<E> \{
+    \LA{}Միակապ հանգույցի սահմանումը~{\nwtagstyle{}\subpageref{NW3BO1cf-4IVWU5-1}}\RA{}
+    \LA{}Ցուցակի սկիզբը~{\nwtagstyle{}\subpageref{NW3BO1cf-2KIT3w-1}}\RA{}
+    \LA{}Ցուցակը դատա՞րկ է~{\nwtagstyle{}\subpageref{NW3BO1cf-1KlDO5-1}}\RA{}
+    \LA{}Տարր ավելացնել սկզբից~{\nwtagstyle{}\subpageref{NW3BO1cf-cBZlg-1}}\RA{}
+    \LA{}Հեռացնել առաջին տարրը~{\nwtagstyle{}\subpageref{NW3BO1cf-2X2nTk-1}}\RA{}
+    \LA{}Աբստրակտ մեթոդներ~{\nwtagstyle{}\subpageref{NW3BO1cf-2798w2-1}}\RA{}
+\}
+\nwendcode{}\nwbegindocs{2}\nwdocspar
+
+%
+%
+\paragraph{Միակապ ցուցակի հանգույցը։}
+Ինչպես արդեն նշեցի վերևում, միակապ ցուցակի հանգույցը պարունակում 
+է երկու պարտադիր դաշտ․ \texttt{data}՝ \emph{տվյալների} համար և 
+\texttt{next}՝ ցուցակի պոչին \emph{հղվելու} համար։ Իրականացումը 
+շատ պարզ է․
+\nwenddocs{}\nwbegincode{3}\sublabel{NW3BO1cf-4IVWU5-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BO1cf-4IVWU5-1}}}\moddef{Միակապ հանգույցի սահմանումը~{\nwtagstyle{}\subpageref{NW3BO1cf-4IVWU5-1}}}\endmoddef\nwused{\\{NW3BO1cf-1Zd7Ww-1}}
+protected class Node \{
+    public E data = null;
+    public Node next = null;
+
+    public Node(E e)
+    \{
+        data = e;
+    \}
+\}
+\nwendcode{}\nwbegindocs{4}\nwdocspar
+Արժե նշել, որ բացի նշված երկուսից, հանգույցը կարող է պարունակել 
+այլ դաշտեր ևս։ Սակայն դաշտերից որևէ մեկը պետք է առանձնացվի որպես 
+\emph{բանալի} (key)։ Տվյալ դեպքում բանալու դերը կատարում է հենց 
+\texttt{data}֊ն։
+
+%
+%
+\paragraph{Ցուցակի սկիզբը։}
+Քանի որ բոլոր հանգույցները կապված են միմյանց, ապա միակապ ցուցակի 
+հետ աշխատելու համար անհրաժեշտ է (թերևս, նաև՝ բավական է) ունենալ 
+առաջին հանգույցի ցուցիչը։ \texttt{SinglyLinked} դասի \texttt{head} 
+անդամը նախատեսված է հենց դրա համար․
+\nwenddocs{}\nwbegincode{5}\sublabel{NW3BO1cf-2KIT3w-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BO1cf-2KIT3w-1}}}\moddef{Ցուցակի սկիզբը~{\nwtagstyle{}\subpageref{NW3BO1cf-2KIT3w-1}}}\endmoddef\nwused{\\{NW3BO1cf-1Zd7Ww-1}}
+protected Node head = null;
+\nwendcode{}\nwbegindocs{6}\nwdocspar
+Երբեմն, առաջին տարրի հղման հետ միասին, միակապ ցուցակում պահում 
+են նաև հղում ցուցակի վերջին հանգույցին։ Դա հեշտացնում է որոշ 
+գործողություններ (օրինակ, վերջին տարրի հեռացնելը), սակայն մեր 
+այս օրինակում այդ երկրորդ ցուցիչը չենք օգտագործի։
+
+\nwenddocs{}\nwbegindocs{7}Ցուցակի դատարկ լինելը ստուգելու համար պետք է պարզապես 
+ստուգել, որ \texttt{head} ցուցչը հավասար լինի \texttt{null}֊ի։
+\nwenddocs{}\nwbegincode{8}\sublabel{NW3BO1cf-1KlDO5-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BO1cf-1KlDO5-1}}}\moddef{Ցուցակը դատա՞րկ է~{\nwtagstyle{}\subpageref{NW3BO1cf-1KlDO5-1}}}\endmoddef\nwused{\\{NW3BO1cf-1Zd7Ww-1}}
+public boolean empty()
+\{
+    return head == null;
+\}
+\eatline
+\nwendcode{}\nwbegindocs{9}\nwdocspar
+
+%
+%
+\paragraph{Տարրի ավելացնելը ցուցակի սկզբում։}
+Միակապ ցուցակի սկզբից տարրի ավելացնելը պարզագույն գործողություն 
+է (\(O(1)\) բարդությամբ)։ Պետք է ստեղծել նոր հանգույց, այն կապել 
+ցուցակի սկիզբը ցույց տվող \texttt{head} հղմանը, ապա այդ նոր 
+ստեղծված հանգույցը դարձնել ցուցակի սկիզբ։
+\nwenddocs{}\nwbegincode{10}\sublabel{NW3BO1cf-cBZlg-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BO1cf-cBZlg-1}}}\moddef{Տարր ավելացնել սկզբից~{\nwtagstyle{}\subpageref{NW3BO1cf-cBZlg-1}}}\endmoddef\nwused{\\{NW3BO1cf-1Zd7Ww-1}}
+public void addFront(E e)
+\{
+  Node no = new Node(e);
+  no.next = head;
+  head = no;
+\}
+\nwendcode{}\nwbegindocs{11}\nwdocspar
+
+%
+%
+\paragraph{Ցուցակի առաջին տարրի հեռացնելը։}
+Առաջին տարրը հեռացնելու համար պետք է \texttt{head}֊ը տեղափոխել
+իրեն հաջորդող հանգույցին, ապա վերադարձնել առաջին հանգույցի 
+\texttt{data} դաշտի արժեքը։
+\nwenddocs{}\nwbegincode{12}\sublabel{NW3BO1cf-2X2nTk-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BO1cf-2X2nTk-1}}}\moddef{Հեռացնել առաջին տարրը~{\nwtagstyle{}\subpageref{NW3BO1cf-2X2nTk-1}}}\endmoddef\nwused{\\{NW3BO1cf-1Zd7Ww-1}}
+public E removeFront()
+\{
+    if( empty() )
+        return null;
+
+    Node no = head;
+    head = no.next;
+    return no.data;
+\}
+\nwendcode{}\nwbegindocs{13}\nwdocspar
+
+
+%
+%
+\paragraph{Աբստրակտ մեթոդների հայտարարություններ։}
+Միակապ ցուցակի այն գործողությունները, որոնց իրականացումը տարբերվում 
+են ռեկուրսիվ և իտերատիվ իրականացումներում, ես հայտարարել եմ որպես
+\texttt{SinglyLinked} դասի աբստրակտ մեթոդներ։ Ահա դրանց թվարկումը․
+\nwenddocs{}\nwbegincode{14}\sublabel{NW3BO1cf-2798w2-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BO1cf-2798w2-1}}}\moddef{Աբստրակտ մեթոդներ~{\nwtagstyle{}\subpageref{NW3BO1cf-2798w2-1}}}\endmoddef\nwused{\\{NW3BO1cf-1Zd7Ww-1}}
+// Հաշվել տարրերի քանակը
+public abstract int count();
+// Տարր ավելացնել վերջում
+public abstract void addBack(E e);
+// Հեռացնել վերջին տարրը
+public abstract E removeBack();
+// Որոնել տրված տարրը
+public abstract boolean contains(E e);
+// Հեռացնել տրված արժեքով տարրերը
+public abstract void removeAll(E e);
+// Շրջել ցուցակը
+public abstract void reverse();
+// Անցնել բոլոր տարրերով
+public abstract void forAll(Consumer<E> f);
+\nwendcode{}\nwbegindocs{15}\nwdocspar
+
+
+%
+%
+\subsection{\texttt{SinglyLinkedRecursive} դասը}
+
+Միակապ ցուցակի ռեկուրսիվ իրականացման \texttt{singlyLinkedRecursive} 
+դասը \texttt{SinglyLinked} աբստրակտ դասի կոնկրետացումն (ընդլայնումն)
+է։ 
+\nwenddocs{}\nwbegincode{16}\sublabel{NW3BO1cf-4IsYR7-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BO1cf-4IsYR7-1}}}\moddef{SinglyLinkedRecursive դասը~{\nwtagstyle{}\subpageref{NW3BO1cf-4IsYR7-1}}}\endmoddef\nwnotused{SinglyLinkedRecursive\ դասը}
+package structures;
+import java.util.function.Consumer;
+public class SinglyLinkedRecursive<E> extends SinglyLinked<E> \{
+  \LA{}Հաշվել տարրերի քանակը (ռեկ․)~{\nwtagstyle{}\subpageref{NW3BO1cf-4PeVq5-1}}\RA{}
+  \LA{}Տարր ավելացնել վերջում (ռեկ․)~{\nwtagstyle{}\subpageref{NW3BO1cf-3w06xO-1}}\RA{}
+  \LA{}Որոնել տրված տարրը (ռեկ․)~{\nwtagstyle{}\subpageref{NW3BO1cf-1PJyWD-1}}\RA{}
+  \LA{}Հեռացնել վերջին տարրը (ռեկ․)~{\nwtagstyle{}\subpageref{NW3BO1cf-2ydzSM-1}}\RA{}
+  \LA{}Հեռացնել տրված արժեքով տարրերը (ռեկ․)~{\nwtagstyle{}\subpageref{NW3BO1cf-32aRxc-1}}\RA{}
+  \LA{}Շրջել ցուցակը (ռեկ․)~{\nwtagstyle{}\subpageref{NW3BO1cf-40fHfm-1}}\RA{}
+  \LA{}Անցնել բոլոր տարրերով (ռեկ․)~{\nwtagstyle{}\subpageref{NW3BO1cf-4Dew7d-1}}\RA{}
+\}
+\nwendcode{}\nwbegindocs{17}\nwdocspar
+Ռեկուրսիվ տարբերակում բուն ռեկուրսիան իրականացված է օժանդակ  
+\texttt{private} մեթոդի օգնությամբ, որը, բացի տվյալ գործողության 
+համար պահանջվող պարամետրից, ունի ևս մեկ լրացուցիչ պարամետր՝ 
+\texttt{Node} տիպի։ Այս լրացուցիչ պարամետրով տրվում է ցուցակի 
+այն հանգույցը, որից սկսած պետք է կատարել գործողությունը։ 
+
+
+%
+%
+\paragraph{Հաշվել տարրերի քանակը։}
+Միակապ ցուցակում տարրերի (հանգույցների) քանակը հաշվելու համար 
+նախատեսված է \texttt{count(Node n)} օժանդակ մեթոդը։ Եթե 
+\(n\equiv\boxslash\), այսինքն՝ ցուցակը դատարկ է, ապա վերադարձվում 
+է \(0\), հակառակ դեպքում վերադարձվում է ցուցակի պոչի 
+երկարությունը՝ գումարած \(1\)։
+\nwenddocs{}\nwbegincode{18}\sublabel{NW3BO1cf-4PeVq5-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BO1cf-4PeVq5-1}}}\moddef{Հաշվել տարրերի քանակը (ռեկ․)~{\nwtagstyle{}\subpageref{NW3BO1cf-4PeVq5-1}}}\endmoddef\nwalsodefined{\\{NW3BO1cf-4PeVq5-2}}\nwused{\\{NW3BO1cf-4IsYR7-1}}
+private int count(Node n)
+\{
+  if( n == null )
+    return 0;
+
+  return 1 + count(n.next);
+\}
+\nwendcode{}\nwbegindocs{19}\nwdocspar
+Այս օժանդակ մեթոդն արդեն օգտագործվում է \texttt{length()} 
+ինտերֆեյսային մեթոդում․
+\nwenddocs{}\nwbegincode{20}\sublabel{NW3BO1cf-4PeVq5-2}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BO1cf-4PeVq5-2}}}\moddef{Հաշվել տարրերի քանակը (ռեկ․)~{\nwtagstyle{}\subpageref{NW3BO1cf-4PeVq5-1}}}\plusendmoddef
+@Override
+public int count()
+\{
+  return count(head);
+\}
+\nwendcode{}\nwbegindocs{21}\nwdocspar
+
+
+%
+%
+\paragraph{Տարր ավելացնել ցուցակի վերջում։}
+Միակապ ցուցակի վերջում տրված տարրն ավելացնելու ռեկուրսիվ մոտեցումը
+նորից շատ պարզ է։ Եթե ցուցակը դատարկ է, ապա պետք է վերադարձնել 
+տրված տարրը պարունակող նոր ստեղծված հանգույցը։ Հակառակ դեպքում,
+պետք է տարրն ավելացնել ցուցակի պոչի վերջից, ապա այդ ձևափոխված 
+պոչը կապել առաջին հանգույցի \texttt{next} ցուցիչին։ 
+\texttt{Node addBack(E e, Node n)} օժանդակ մեթոդը կատարում է 
+հենց նշված քայլերը։
+\nwenddocs{}\nwbegincode{22}\sublabel{NW3BO1cf-3w06xO-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BO1cf-3w06xO-1}}}\moddef{Տարր ավելացնել վերջում (ռեկ․)~{\nwtagstyle{}\subpageref{NW3BO1cf-3w06xO-1}}}\endmoddef\nwused{\\{NW3BO1cf-4IsYR7-1}}
+private Node addBack(E e, Node n)
+\{
+  if( n == null )
+    return new Node(e);
+
+  n.next = addBack(e, n.next);
+  return n;
+\}
+@Override
+public void addBack(E e)
+\{
+  head = addBack(e, head);
+\}
+\nwendcode{}\nwbegindocs{23}\nwdocspar
+
+
+%
+%
+\paragraph{Որոնել տրված տարրը։}
+Տրված արժեքով տարրը միակապ ցուցակում որոնվում է երեք քայլով․ 
+ա) եթե ցուցակը դատարկ է, ապա վերադարձվում է \texttt{false},
+բ) եթե ցուցակի առաջին հանգույցի \texttt{data} դաշտի արժեքը 
+հավասար է որոնվող տարրին, ապա վերադարձնել \texttt{true}, և
+գ) վերադարձնել ցուցակի պոչում տարրը որոնելու արդյունքը։
+\nwenddocs{}\nwbegincode{24}\sublabel{NW3BO1cf-1PJyWD-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BO1cf-1PJyWD-1}}}\moddef{Որոնել տրված տարրը (ռեկ․)~{\nwtagstyle{}\subpageref{NW3BO1cf-1PJyWD-1}}}\endmoddef\nwused{\\{NW3BO1cf-4IsYR7-1}}
+private boolean contains(E e, Node n)
+\{
+  if( n == null )
+    return false;
+
+  if( n.data.equals(e) )
+    return true;
+
+  return contains(e, head.next);
+\}
+@Override
+public boolean contains(E e)
+\{
+    return contains(e, head);
+\}
+\nwendcode{}\nwbegindocs{25}\nwdocspar
+
+
+%
+%
+\paragraph{Ցուցակի վերջին տարրի հեռացնելը։}
+Եթե ցուցակը դատարկ է, ապա հեռացնելու բան չկա։ Եթե ցուցակում 
+միայն մեկ հանգույց է, այսինքն՝ \(n.next\equiv\boxslash\), ապա 
+պետք է վերադարձնել դատարկ ցուցակ՝ \(\boxslash\)։ Մյուս դեպքերում, 
+ցուցակի առաջին հանգույցի \texttt{next} ցուցիչին պետք է կապել 
+ցուցակի պոչը, որից հեռացված է վերջին հանգույցը։
+\nwenddocs{}\nwbegincode{26}\sublabel{NW3BO1cf-2ydzSM-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BO1cf-2ydzSM-1}}}\moddef{Հեռացնել վերջին տարրը (ռեկ․)~{\nwtagstyle{}\subpageref{NW3BO1cf-2ydzSM-1}}}\endmoddef\nwused{\\{NW3BO1cf-4IsYR7-1}}
+private Node removeBack(Node n, Node r)
+\{
+  if( n == null )
+    return null;
+
+  if( n.next == null ) \{
+    r.data = n.data;
+    return null;
+  \}
+
+  n.next = removeBack(n.next, r);
+  return n;
+\}
+@Override
+public E removeBack()
+\{
+  Node r = new Node(null);
+  head = removeBack(head, r);
+  return r.data;
+\}
+\nwendcode{}\nwbegindocs{27}\nwdocspar
+
+
+%
+%
+\paragraph{Հեռացնել տրված արժեքով բոլոր տարրերը։}
+Եթե ցուցակը դատարկ է, ապա ոչինչ անել պետք չէ, վերադարձնել 
+\(\boxslash\)։ Եթե ցուցակի առաջին հանգույցի \texttt{data}֊ն
+հավասար է հեռացվող արժեքին, ապա հեռացնելու գործողությունը
+կիրառել ցուցակի պոչի նկատմամբ և վերադարձնել ստացված արդյունքը։
+Հակառակ դեպքում առաջին հանգույցի \texttt{next}֊ին կապել 
+այն ցուցակը, որը ստացվել է նախանական ցուցակի պոչից տրված 
+տարրը հեռացնելու արդյունքում։
+\nwenddocs{}\nwbegincode{28}\sublabel{NW3BO1cf-32aRxc-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BO1cf-32aRxc-1}}}\moddef{Հեռացնել տրված արժեքով տարրերը (ռեկ․)~{\nwtagstyle{}\subpageref{NW3BO1cf-32aRxc-1}}}\endmoddef\nwused{\\{NW3BO1cf-4IsYR7-1}}
+private Node removeAll(E e, Node n)
+\{
+  if( n == null )
+    return null;
+
+  if( n.data.equals(e) )
+    return removeAll(e, n.next);
+
+  n.next = removeAll(e, n.next);
+  return n;
+\}
+@Override
+public void removeAll(E e)
+\{
+  head = removeAll(e, head);
+\}
+\nwendcode{}\nwbegindocs{29}\nwdocspar
+
+
+%
+%
+\paragraph{Ցուցակի շրջելը։}
+Ռեկուրսիվ եղանակով միակապ ցուցակը շրջելու ալգորիթմը զարմացնում 
+է իր պարզությամբ (ի տարբերություն իտերատիվ ալգորիթմի)։ 
+\texttt{reverse(Node n, Node r)} օժանդակ մեթոդի առաջին 
+պարամետրը հղում է ցուցակի դեռ չշրջված մասին, իսկ երկրորդը՝
+արդեն շրջվածին։ Ռեկուրսիայի ամեն քայլում չշրջված ցուցակից
+անջատվում է առաջին հանգույցը և այն միացվում է արդեն շրջված
+ցուցակի սկզբից։ Այն դեպքում, երբ առաջին պարամետրը \(\boxslash\)
+է, այսինքն՝ դատարկ է, որպես արդյունք պետք է վերադարձնել 
+երկրորդ պարամետրը՝ արդեն շրջված ցուցակը։   
+\nwenddocs{}\nwbegincode{30}\sublabel{NW3BO1cf-40fHfm-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BO1cf-40fHfm-1}}}\moddef{Շրջել ցուցակը (ռեկ․)~{\nwtagstyle{}\subpageref{NW3BO1cf-40fHfm-1}}}\endmoddef\nwalsodefined{\\{NW3BO1cf-40fHfm-2}}\nwused{\\{NW3BO1cf-4IsYR7-1}}
+public Node reverse(Node n, Node r)
+\{
+  if( n == null )
+    return r;
+
+  Node h = n; 
+  n = n.next; 
+  h.next = r;
+  return reverse(n, h);
+\}
+\nwendcode{}\nwbegindocs{31}\nwdocspar
+\nwenddocs{}\nwbegindocs{32}Երբ ամբողջ ցուցակը շրջելու համար \texttt{reverse(Node n, Node r)} 
+օժանդակ մեթոդը կանչվում է \texttt{reverse()} ինտերֆեյսային մեթոդում,
+ապա առաջին արգումենտում պետք է տալ \texttt{head}֊ը, իսկ երկրորդում՝
+\texttt{null}։
+\nwenddocs{}\nwbegincode{33}\sublabel{NW3BO1cf-40fHfm-2}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BO1cf-40fHfm-2}}}\moddef{Շրջել ցուցակը (ռեկ․)~{\nwtagstyle{}\subpageref{NW3BO1cf-40fHfm-1}}}\plusendmoddef
+@Override
+public void reverse()
+\{
+  head = reverse(head, null);
+\}
+\nwendcode{}\nwbegindocs{34}\nwdocspar
+
+
+
+%
+%
+\paragraph{Անցում բոլոր հանգույցներով։}
+Կապակցված ցուցակը տվյալների կոնտեյներ է։ Բացի տարրեր 
+ավելացնելն ու հեռացնելը, առավել հաճախ անհրաժեշտ է լինում 
+ինչ֊որ գործողություն կատարել ցուցակի տարրերի հետ։ Օրինակ, 
+արտածել տարրերի արժեքները պարունակությունը մի որևէ հոսքի
+վրա։ Դրա համար պետք է անցնել ցուցակի բոլոր հանգույցներով
+և տրված գործողությունը կիրառել \texttt{data}֊ի արժեքի
+նկատմամբ։
+
+Անցման ռեկուրսիվ ալգորիթմը այսպիսինն է․ եթե ցուցակը դատարկ 
+չէ, ապա \texttt{f} գործողությունը կիրառել նրա առաջին հանգույցի 
+\texttt{data}֊ի նկատմամբ, և կատարել ռեկուրսիվ քայլ՝ ցուցակի
+պոչի նկատմամբ։
+\nwenddocs{}\nwbegincode{35}\sublabel{NW3BO1cf-4Dew7d-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BO1cf-4Dew7d-1}}}\moddef{Անցնել բոլոր տարրերով (ռեկ․)~{\nwtagstyle{}\subpageref{NW3BO1cf-4Dew7d-1}}}\endmoddef\nwused{\\{NW3BO1cf-4IsYR7-1}}
+private void forAll(Consumer<E> f, Node n)
+\{
+  if( n != null ) \{
+    f.accept(n.data);
+    forAll(f, n.next);
+  \}
+\}
+@Override
+public void forAll(Consumer<E> f)
+\{
+  forAll(f, head);
+\}
+\nwendcode{}\nwbegindocs{36}\nwdocspar
+
+
+%
+%
+%
+\subsection{\texttt{SinglyLinkedIterative} դասը}
+
+Միակապ ցուցակների հետ կատարվող գործողությունների իտերատիվ 
+իրականացման համար \texttt{SinglyLinked} դասն ընդլայնել եմ 
+\texttt{SinglyLinkedIterative} դասով։ Այս դասը, բնականաբար,
+պարունակում է \texttt{SinglyLinked} դասի բոլոր աբստրակտ 
+մեթոդների իրականացումները, բայց այս անգամ արդեն առանց 
+օժանդակ մեթոդների օգնության։ Հետագա շարադրանքում պարզ 
+կդառնա, որ դրանց կարիքը պարզապես չկա։ Ահա դասի սահմանման
+սխեման․ 
+\nwenddocs{}\nwbegincode{37}\sublabel{NW3BO1cf-4UDjoR-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BO1cf-4UDjoR-1}}}\moddef{SinglyLinkedIterative դասը~{\nwtagstyle{}\subpageref{NW3BO1cf-4UDjoR-1}}}\endmoddef\nwnotused{SinglyLinkedIterative\ դասը}
+package structures;
+import java.util.function.Consumer;
+public class SinglyLinkedIterative<E> extends SinglyLinked<E> \{
+  \LA{}Հաշվել տարրերի քանակը (իտ․)~{\nwtagstyle{}\subpageref{NW3BO1cf-2iQ9hA-1}}\RA{}
+  \LA{}Տարր ավելացնել վերջում (իտ․)~{\nwtagstyle{}\subpageref{NW3BO1cf-4Ig43A-1}}\RA{}
+  \LA{}Որոնել տրված տարրը (իտ․)~{\nwtagstyle{}\subpageref{NW3BO1cf-4FxScZ-1}}\RA{}
+  \LA{}Հեռացնել վերջին տարրը (իտ․)~{\nwtagstyle{}\subpageref{NW3BO1cf-36foPe-1}}\RA{}
+  \LA{}Հեռացնել տրված արժեքով տարրերը (իտ․)~{\nwtagstyle{}\subpageref{NW3BO1cf-1VtVgM-1}}\RA{}
+  \LA{}Շրջել ցուցակը (իտ․)~{\nwtagstyle{}\subpageref{NW3BO1cf-1lXgEW-1}}\RA{}
+  \LA{}Անցնել բոլոր տարրերով (իտ․)~{\nwtagstyle{}\subpageref{NW3BO1cf-1Zzxaa-1}}\RA{}
+\}
+\nwendcode{}\nwbegindocs{38}\nwdocspar
+Գործողությունների ռեկուրսիվ իրականացման դեպքում կար մի 
+ընդհանուր սխեմա․ նախ՝ ստուգել բազային դեպքը, դա սովորաբար
+ցուցակի դատարկ լինելու կամ մեկ տարր պարունակելու դեպքն է, 
+ապա ռեկուրսիվ քայլ կատարել ցուցակի պոչի նկատմամբ։ 
+Իտերատիվ իրականացման դեպքում էլ կա այդպիսի սխեմա․ դա 
+մի նախապայմանով ցիկլ է (\texttt{while}), որը անցնում է
+ցուցակի բոլոր տարրերով։ Ստորև բերված բոլոր մեթոդներում
+այդ սխեման է։
+
+%
+%
+\paragraph{Հաշվել տարրերի քանակը։}
+Պարզագույն գործողություն է։ Նախ պետք է \texttt{p}֊ին տալ 
+\texttt{head} սկզբնական արժեքը, ապա՝ քանի դեռ \texttt{p}֊ն
+\texttt{null} չի դարձել, \texttt{res} հաշվիչը ավելացնել մեկով
+և \texttt{p}֊ն տեղափոխել հաջորդ հանգույցին։ 
+\nwenddocs{}\nwbegincode{39}\sublabel{NW3BO1cf-2iQ9hA-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BO1cf-2iQ9hA-1}}}\moddef{Հաշվել տարրերի քանակը (իտ․)~{\nwtagstyle{}\subpageref{NW3BO1cf-2iQ9hA-1}}}\endmoddef\nwused{\\{NW3BO1cf-4UDjoR-1}}
+@Override
+public int count()
+\{
+  int res = 0;
+  Node p = head;
+  while( p != null ) \{
+    ++res;
+    p = p.next;
+  \}
+  return res;
+\}
+\nwendcode{}\nwbegindocs{40}\nwdocspar
+
+
+%
+%
+\paragraph{Տարր ավելացնել ցուցակի վերջում։}
+Եթե ցուցակը դատարկ է, ապա նոր ստեղծված հանգույցը կապվում է 
+\texttt{head}֊ին և դառնում է ցուցակի առաջին և միակ հանգույցը։
+Իսկ եթե ցուցակը դատարկ չէ, ապա մի որևէ \texttt{p} ցուցիչը
+ցիկլով տեղաշարժվում է մինչև ցուցակի վերջը, և նոր ստեղծված
+հանգույցը կապվում է վերջին հանգույցի \texttt{next}֊ին։
+\nwenddocs{}\nwbegincode{41}\sublabel{NW3BO1cf-4Ig43A-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BO1cf-4Ig43A-1}}}\moddef{Տարր ավելացնել վերջում (իտ․)~{\nwtagstyle{}\subpageref{NW3BO1cf-4Ig43A-1}}}\endmoddef\nwused{\\{NW3BO1cf-4UDjoR-1}}
+@Override
+public void addBack(E e)
+\{
+  Node no = new Node(e);
+  if( head == null )
+    head = no;
+  else \{
+    Node p = head;
+    while( p.next != null )
+      p = p.next;
+    p.next = no;
+  \}
+\}
+\nwendcode{}\nwbegindocs{42}\nwdocspar
+
+%
+%
+\paragraph{Որոնել տրված տարրը։}
+Նորից պետք է անցնել ցուցակի հանգույցներով և հերթական հանգույցի 
+\texttt{data}֊ն համեմատել տրված արժեքի հետ։ Եթե հավասար են, ապա 
+վերադարձնել \texttt{true}։ Եթե հանգույցներով անցման ցիկլն 
+ավարտվել է, ուրեմն տրված արժեքը ցուցակում չի հանդիպել և պետք 
+է վերադարձնել \texttt{false}։
+\nwenddocs{}\nwbegincode{43}\sublabel{NW3BO1cf-4FxScZ-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BO1cf-4FxScZ-1}}}\moddef{Որոնել տրված տարրը (իտ․)~{\nwtagstyle{}\subpageref{NW3BO1cf-4FxScZ-1}}}\endmoddef\nwused{\\{NW3BO1cf-4UDjoR-1}}
+@Override
+public boolean contains(E e)
+\{
+  Node p = head;
+  while( p != null ) \{
+    if( p.data.equals(e) )
+      return true;
+    p = p.next;
+  \}
+  return false;
+\}
+\nwendcode{}\nwbegindocs{44}\nwdocspar
+
+%
+%
+\paragraph{Ցուցակի վերջին տարրի հեռացնելը։}
+Ցուցակի վերջին հանգույցը հեռացնելու համար ես դիտարկում եմ 
+երեք դեպք․ ա) ցուցակը դատարկ է, բ) ցուցակում միայն մեկ 
+հանգույց է, գ) ցուցակում մեկից ավելի հանգույցներ են։
+\nwenddocs{}\nwbegincode{45}\sublabel{NW3BO1cf-36foPe-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BO1cf-36foPe-1}}}\moddef{Հեռացնել վերջին տարրը (իտ․)~{\nwtagstyle{}\subpageref{NW3BO1cf-36foPe-1}}}\endmoddef\nwused{\\{NW3BO1cf-4UDjoR-1}}
+@Override
+public E removeBack()
+\{
+  \LA{}Երբ ցուցակը դատարկ է~{\nwtagstyle{}\subpageref{NW3BO1cf-pJLbC-1}}\RA{}
+  \LA{}Երբ հանգույցը միակն է~{\nwtagstyle{}\subpageref{NW3BO1cf-8ZpFM-1}}\RA{}
+  \LA{}Երբ հանգույցները մեկից ավել են~{\nwtagstyle{}\subpageref{NW3BO1cf-3KC1UW-1}}\RA{}
+\}
+\nwendcode{}\nwbegindocs{46}\nwdocspar
+Երբ ցուցակը դատարկ է, ապա հեռացնելու բան չկա և վերադարձվող 
+արժեքն էլ \texttt{null}֊ն է։
+\nwenddocs{}\nwbegincode{47}\sublabel{NW3BO1cf-pJLbC-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BO1cf-pJLbC-1}}}\moddef{Երբ ցուցակը դատարկ է~{\nwtagstyle{}\subpageref{NW3BO1cf-pJLbC-1}}}\endmoddef\nwused{\\{NW3BO1cf-36foPe-1}}
+if( head == null )
+  return null;
+\nwendcode{}\nwbegindocs{48}\nwdocspar
+Երբ ցուցակում միայն մեկ հանգույց է, ապա դա կապված է \texttt{head}֊ի 
+հետ։ Ուրեմն, պետք է վերադարձնել այդ միակ հանգույցի \texttt{data}֊ն 
+և \texttt{head}֊ին էլ վերագրել \texttt{null}՝ ցուցակը դարձնել դատարկ։
+\nwenddocs{}\nwbegincode{49}\sublabel{NW3BO1cf-8ZpFM-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BO1cf-8ZpFM-1}}}\moddef{Երբ հանգույցը միակն է~{\nwtagstyle{}\subpageref{NW3BO1cf-8ZpFM-1}}}\endmoddef\nwused{\\{NW3BO1cf-36foPe-1}}
+if( head.next == null ) \{
+  E res = head.data;
+  head = null;
+  return res;
+\}
+\nwendcode{}\nwbegindocs{50}\nwdocspar
+Վերջապես, երբ ցուցակի հանգույցների քանակը մեկից ավել է, ապա պետք 
+է մի օժանդակ ցուցիչի օգնությամբ հասնել նախավերջին հանգույցին, 
+վերադարձնել դրան հաջորդող հանգույցի \texttt{data}֊ն, իսկ 
+նախավերջին հանգույցի \texttt{next}֊ին վերագրել \texttt{null}։
+\nwenddocs{}\nwbegincode{51}\sublabel{NW3BO1cf-3KC1UW-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BO1cf-3KC1UW-1}}}\moddef{Երբ հանգույցները մեկից ավել են~{\nwtagstyle{}\subpageref{NW3BO1cf-3KC1UW-1}}}\endmoddef\nwused{\\{NW3BO1cf-36foPe-1}}
+Node p = head;
+while( p.next != null )
+  p = p.next;
+E res = p.data;
+p.next = null;
+return res;
+\nwendcode{}\nwbegindocs{52}\nwdocspar
+
+%
+%
+\paragraph{Հեռացնել բոլոր տրված արժեքներով տարրերը։}
+Ակնհայտ է, որ միակապ ցուցակից հեշտ է հեռացնել մի որևէ \texttt{p}
+ցուցիչին կապված հանգույցին հաջորդող հանգույցը։ Դրա համար պետք է
+պարզապես կատարել \texttt{p.next = p.next.next} վերագրումը։
+(Մի որևէ հանգույց հեռացնելու համար [Վիրտ] գրքում առաջարկվում է
+հեռացնել դրան հաջորդող հանգույցը, ապա հեռացվածի տվյալներն 
+արտագրել ընթացիկի մեջ՝ դրանով ստեղծելով ընթացիկ հանգույցը 
+հեռացնելու էֆեկտ։)
+
+% TODO հետագայում խմբագրել և ուղղել
+%\begin{figure}[h]
+\medskip
+{\centering{\includegraphics{struc-fig-8.eps}}\par}
+\medskip
+%\end{figure}
+
+Որպեսզի միակապ ցուցակից տրված արժեքով բոլոր տարրերը հեռացնելու 
+ալգորիթմը հնարավորինս պարզ լինի, ես օգտագործել եմ մի փոքրիկ 
+հնարք։ Այն է՝ ցուցակի սկզբից ավելացնում եմ մի ձևական հանգույց։
+\nwenddocs{}\nwbegincode{53}\sublabel{NW3BO1cf-1VtVgM-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BO1cf-1VtVgM-1}}}\moddef{Հեռացնել տրված արժեքով տարրերը (իտ․)~{\nwtagstyle{}\subpageref{NW3BO1cf-1VtVgM-1}}}\endmoddef\nwused{\\{NW3BO1cf-4UDjoR-1}}
+@Override
+public void removeAll(E e)
+\{
+  Node pre = new Node(null);
+  pre.next = head;
+  Node p = pre;
+  while( p.next != null ) \{
+    if( e.equals(p.next.data) )
+      p.next = p.next.next;
+    else
+      p = p.next;
+  \}
+  head = pre.next;
+\}
+\nwendcode{}\nwbegindocs{54}\nwdocspar
+
+%
+%
+\paragraph{Շրջել ցուցակը։}
+Միակապ ցուցակը իտերատիվ եղանակով (և մեկ անցումով) շրջելու համար 
+օգտագործում եմ երկու ցուցիչներ՝ \texttt{p} և \texttt{q}, որոնցից
+առաջինը կապված է ցուցակի դեռ չշրջված մասին, իսկ երկրորդը՝ արդեն 
+շրջվածին (ամենասկզբում՝ \(p\equiv head\) և \(q\equiv\boxslash\)): 
+Քանի դեռ \texttt{p}֊ն չի հասել ցուցակի վերջին, կատարվում են 
+հետևյալ քայլերը․ \textbf{i}) \texttt{r} ժամանակավոր ցուցիչը կապվում 
+է \texttt{p}֊ին հոջորդող հանգույցին, \textbf{ii}) \texttt{p}֊ի 
+\texttt{next}֊ին կապվում է \texttt{q}֊ն՝ դառնալով \texttt{p}֊ի 
+հաջորդող հանգույց, \textbf{iii}) \texttt{q} ցուցիչը կապվում է
+\texttt{p}֊ին կապված հանգույցին՝ դառնալով ցուցակի շրջված մասի 
+սկզբի ցուցիչ, և \textbf{iv}) \texttt{p}֊ն տեղափոխվում է \texttt{r}֊ի
+ցույց տված հանգույցի վրա՝ նորից ցույց տալով ցուցակի չշրջված մասի 
+սկիզբը։
+\nwenddocs{}\nwbegincode{55}\sublabel{NW3BO1cf-1lXgEW-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BO1cf-1lXgEW-1}}}\moddef{Շրջել ցուցակը (իտ․)~{\nwtagstyle{}\subpageref{NW3BO1cf-1lXgEW-1}}}\endmoddef\nwused{\\{NW3BO1cf-4UDjoR-1}}
+@Override
+public void reverse()
+\{
+  Node p = head, q = null;
+  while( p != null ) \{
+    Node r = p.next;
+    p.next = q;
+    q = p;
+    p = r;
+  \}
+  head = q;
+\}
+\nwendcode{}\nwbegindocs{56}\nwdocspar
+
+%
+%
+\paragraph{Անցում բոլոր հանգույցներով։}
+Ցուցակի բոլոր հանգույցներով անցնելը և դրանց \texttt{data}
+դաշտի հետ տրված \texttt{f} գործողությունը կատարելու համար 
+պետք է գրել մի պարզագույն ցիկլ։
+\nwenddocs{}\nwbegincode{57}\sublabel{NW3BO1cf-1Zzxaa-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3BO1cf-1Zzxaa-1}}}\moddef{Անցնել բոլոր տարրերով (իտ․)~{\nwtagstyle{}\subpageref{NW3BO1cf-1Zzxaa-1}}}\endmoddef\nwused{\\{NW3BO1cf-4UDjoR-1}}
+@Override
+public void forAll(Consumer<E> f)
+\{
+  Node p = head;
+  while( p != null ) \{
+    f.accept(p.data);
+    p = p.next;
+  \}
+\}
+\nwendcode{}
+
+\nwixlogsorted{c}{{SinglyLinked դասը}{NW3BO1cf-1Zd7Ww-1}{\nwixd{NW3BO1cf-1Zd7Ww-1}}}%
+\nwixlogsorted{c}{{SinglyLinkedIterative դասը}{NW3BO1cf-4UDjoR-1}{\nwixd{NW3BO1cf-4UDjoR-1}}}%
+\nwixlogsorted{c}{{SinglyLinkedRecursive դասը}{NW3BO1cf-4IsYR7-1}{\nwixd{NW3BO1cf-4IsYR7-1}}}%
+\nwixlogsorted{c}{{Աբստրակտ մեթոդներ}{NW3BO1cf-2798w2-1}{\nwixu{NW3BO1cf-1Zd7Ww-1}\nwixd{NW3BO1cf-2798w2-1}}}%
+\nwixlogsorted{c}{{Անցնել բոլոր տարրերով (իտ․)}{NW3BO1cf-1Zzxaa-1}{\nwixu{NW3BO1cf-4UDjoR-1}\nwixd{NW3BO1cf-1Zzxaa-1}}}%
+\nwixlogsorted{c}{{Անցնել բոլոր տարրերով (ռեկ․)}{NW3BO1cf-4Dew7d-1}{\nwixu{NW3BO1cf-4IsYR7-1}\nwixd{NW3BO1cf-4Dew7d-1}}}%
+\nwixlogsorted{c}{{Երբ հանգույցը միակն է}{NW3BO1cf-8ZpFM-1}{\nwixu{NW3BO1cf-36foPe-1}\nwixd{NW3BO1cf-8ZpFM-1}}}%
+\nwixlogsorted{c}{{Երբ հանգույցները մեկից ավել են}{NW3BO1cf-3KC1UW-1}{\nwixu{NW3BO1cf-36foPe-1}\nwixd{NW3BO1cf-3KC1UW-1}}}%
+\nwixlogsorted{c}{{Երբ ցուցակը դատարկ է}{NW3BO1cf-pJLbC-1}{\nwixu{NW3BO1cf-36foPe-1}\nwixd{NW3BO1cf-pJLbC-1}}}%
+\nwixlogsorted{c}{{Հաշվել տարրերի քանակը (իտ․)}{NW3BO1cf-2iQ9hA-1}{\nwixu{NW3BO1cf-4UDjoR-1}\nwixd{NW3BO1cf-2iQ9hA-1}}}%
+\nwixlogsorted{c}{{Հաշվել տարրերի քանակը (ռեկ․)}{NW3BO1cf-4PeVq5-1}{\nwixu{NW3BO1cf-4IsYR7-1}\nwixd{NW3BO1cf-4PeVq5-1}\nwixd{NW3BO1cf-4PeVq5-2}}}%
+\nwixlogsorted{c}{{Հեռացնել առաջին տարրը}{NW3BO1cf-2X2nTk-1}{\nwixu{NW3BO1cf-1Zd7Ww-1}\nwixd{NW3BO1cf-2X2nTk-1}}}%
+\nwixlogsorted{c}{{Հեռացնել վերջին տարրը (իտ․)}{NW3BO1cf-36foPe-1}{\nwixu{NW3BO1cf-4UDjoR-1}\nwixd{NW3BO1cf-36foPe-1}}}%
+\nwixlogsorted{c}{{Հեռացնել վերջին տարրը (ռեկ․)}{NW3BO1cf-2ydzSM-1}{\nwixu{NW3BO1cf-4IsYR7-1}\nwixd{NW3BO1cf-2ydzSM-1}}}%
+\nwixlogsorted{c}{{Հեռացնել տրված արժեքով տարրերը (իտ․)}{NW3BO1cf-1VtVgM-1}{\nwixu{NW3BO1cf-4UDjoR-1}\nwixd{NW3BO1cf-1VtVgM-1}}}%
+\nwixlogsorted{c}{{Հեռացնել տրված արժեքով տարրերը (ռեկ․)}{NW3BO1cf-32aRxc-1}{\nwixu{NW3BO1cf-4IsYR7-1}\nwixd{NW3BO1cf-32aRxc-1}}}%
+\nwixlogsorted{c}{{Միակապ հանգույցի սահմանումը}{NW3BO1cf-4IVWU5-1}{\nwixu{NW3BO1cf-1Zd7Ww-1}\nwixd{NW3BO1cf-4IVWU5-1}}}%
+\nwixlogsorted{c}{{Շրջել ցուցակը (իտ․)}{NW3BO1cf-1lXgEW-1}{\nwixu{NW3BO1cf-4UDjoR-1}\nwixd{NW3BO1cf-1lXgEW-1}}}%
+\nwixlogsorted{c}{{Շրջել ցուցակը (ռեկ․)}{NW3BO1cf-40fHfm-1}{\nwixu{NW3BO1cf-4IsYR7-1}\nwixd{NW3BO1cf-40fHfm-1}\nwixd{NW3BO1cf-40fHfm-2}}}%
+\nwixlogsorted{c}{{Որոնել տրված տարրը (իտ․)}{NW3BO1cf-4FxScZ-1}{\nwixu{NW3BO1cf-4UDjoR-1}\nwixd{NW3BO1cf-4FxScZ-1}}}%
+\nwixlogsorted{c}{{Որոնել տրված տարրը (ռեկ․)}{NW3BO1cf-1PJyWD-1}{\nwixu{NW3BO1cf-4IsYR7-1}\nwixd{NW3BO1cf-1PJyWD-1}}}%
+\nwixlogsorted{c}{{Տարր ավելացնել սկզբից}{NW3BO1cf-cBZlg-1}{\nwixu{NW3BO1cf-1Zd7Ww-1}\nwixd{NW3BO1cf-cBZlg-1}}}%
+\nwixlogsorted{c}{{Տարր ավելացնել վերջում (իտ․)}{NW3BO1cf-4Ig43A-1}{\nwixu{NW3BO1cf-4UDjoR-1}\nwixd{NW3BO1cf-4Ig43A-1}}}%
+\nwixlogsorted{c}{{Տարր ավելացնել վերջում (ռեկ․)}{NW3BO1cf-3w06xO-1}{\nwixu{NW3BO1cf-4IsYR7-1}\nwixd{NW3BO1cf-3w06xO-1}}}%
+\nwixlogsorted{c}{{Ցուցակը դատա՞րկ է}{NW3BO1cf-1KlDO5-1}{\nwixu{NW3BO1cf-1Zd7Ww-1}\nwixd{NW3BO1cf-1KlDO5-1}}}%
+\nwixlogsorted{c}{{Ցուցակի սկիզբը}{NW3BO1cf-2KIT3w-1}{\nwixu{NW3BO1cf-1Zd7Ww-1}\nwixd{NW3BO1cf-2KIT3w-1}}}%
+\nwbegindocs{58}\nwdocspar
+
+
+
+
+%
+%
+\subsection{Միակապ ցուցակի կիրառություններ}
+
+%
+\paragraph{Ստեկ։} Միակապ ցուցակի կիրառության թերևս ամենավառ օրինակը 
+\emph{պահունակը} կամ \emph{ստեկն} (\emph{stack}) է։ Դա մի օբյեկտ է, 
+որում տվյալներ կարելի է ավելացնել և հեռացնել միայն մեկ կողմից՝ սկզբից 
+(կամ վերևից, ինչպես ավտոմատ հրացանի պահունակում)։ Ընդունված է ասել, 
+որ ստեկը LIFO (last-in, first-out) տիպի ցուցակ է։ 
+
+
+%
+\paragraph{Տեքստ։} Դիցուք տրված է մի տեքստային ֆայլ և պահանջվում է
+դրա պարունակությունը ֆորմատավորել տրված լայնությամբ և բարձրությամբ
+սյունակներով։ Այս առաջադրանքն իրագործելու նամար հարմար է նախնական 
+տեքստը ներկայացնել որպես տողերի միակապ ցուցակ, իսկ տողերն էլ իրենց 
+հերթին՝ որպես բառերի միակապ ցուցակ։ Սա հնարավորություն է տալիս,
+օրինակ, բավականին արդյունավետ գործողություններով մի տողը տրոհել մի 
+քանի նոր տեղերի, բառերի արանքներում ավելացնել անհրաժեշտ քանակությամբ 
+բացատներ և այլն։ 
+
+Ընթերոցողին առաջարկում եմ գրել ծրագիր, որը ինչ֊որ պարամետրերով 
+ստանում է տեքստը պարունակող ֆայլը, ֆորմատավորման բնութագրիչները 
+(օրինակ, զուգահեռ սյունակների քանակ, դրանցից յուրաքանչյուրի 
+լայնությունն ու բարձրությունը, և այլն), ապա ստեղծում է նախնական
+տեքստի ֆորմատավորված տարբերակը։ Նշեմ նորից, որ որպես հիմնական
+տվյալների կառուցվածք, պետք է օգտագործել միակապ ցուցակը։ Այդ 
+նպատակի համար կարելի է օգտագործել կամ այս գլխում բերված 
+իրականացումները՝ անհրաժեշտության դեպքում փոփոխություններ կատարելով
+դրանց մեջ, կամ ստեղծել միակապ ցուցակի՝ տվյալ առաջադրանքին ավելի 
+համապատասխան տարբերակ։
+
+
+
+\nwenddocs{}

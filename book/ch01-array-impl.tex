@@ -1,0 +1,82 @@
+\section{Միաչափ զանգված}
+
+Միաչափ զանգվածը կամ վեկտորը տվյալների կառուցվածք է, որի տարրերը
+հաջորդաբար դասավորված են հիշողության անընդհատ տիրույթում։ Տարրերի
+հասանելիության համար օգտագործվում է \(0\)֊ից սկսվող ինդեքսը։
+
+Այստեղ կիրականացնենք \texttt{Array1D} դասը,
+
+\nwfilename{ch01-array-impl.nw}\nwbegincode{1}\sublabel{NW2xbAX4-3DSt5d-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2xbAX4-3DSt5d-1}}}\moddef{Array1D դասը~{\nwtagstyle{}\subpageref{NW2xbAX4-3DSt5d-1}}}\endmoddef\nwnotused{Array1D\ դասը}
+package structures;
+public class Array1D<E extends Comparable> \{
+    \LA{}Տարրերի զանգված~{\nwtagstyle{}\subpageref{NW2xbAX4-MMD3K-1}}\RA{}
+    \LA{}Կոնստրուկտոր~{\nwtagstyle{}\subpageref{NW2xbAX4-0-1}}\RA{}
+    \LA{}Զանգվածի տարրերի քանակը~{\nwtagstyle{}\subpageref{NW2xbAX4-11VMew-1}}\RA{}
+    \LA{}Տարրերի հասանելիություն~{\nwtagstyle{}\subpageref{NW2xbAX4-2KcLCY-1}}\RA{}
+    \LA{}Գծային որոնում~{\nwtagstyle{}\subpageref{NW2xbAX4-MMD3K.2-1}}\RA{}
+    \LA{}Բինար որոնում~{\nwtagstyle{}\subpageref{NW2xbAX4-MMD3K.3-1}}\RA{}
+\}
+\nwendcode{}\nwbegindocs{2}\nwdocspar
+
+\texttt{Array1D}-ի տարրերը պահելու համար սահմանենք \texttt{elements} 
+հասարակ զանգվածը․
+
+\nwenddocs{}\nwbegincode{3}\sublabel{NW2xbAX4-MMD3K-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2xbAX4-MMD3K-1}}}\moddef{Տարրերի զանգված~{\nwtagstyle{}\subpageref{NW2xbAX4-MMD3K-1}}}\endmoddef\nwused{\\{NW2xbAX4-3DSt5d-1}}
+private final E[] elements;
+\nwendcode{}\nwbegindocs{4}\nwdocspar
+
+\nwenddocs{}\nwbegincode{5}\sublabel{NW2xbAX4-0-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2xbAX4-0-1}}}\moddef{Կոնստրուկտոր~{\nwtagstyle{}\subpageref{NW2xbAX4-0-1}}}\endmoddef\nwused{\\{NW2xbAX4-3DSt5d-1}}
+public Array1D(int size) \{
+    elements = (E[])new Object[size];
+\}
+\nwendcode{}\nwbegindocs{6}\nwdocspar
+
+\nwenddocs{}\nwbegincode{7}\sublabel{NW2xbAX4-11VMew-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2xbAX4-11VMew-1}}}\moddef{Զանգվածի տարրերի քանակը~{\nwtagstyle{}\subpageref{NW2xbAX4-11VMew-1}}}\endmoddef\nwused{\\{NW2xbAX4-3DSt5d-1}}
+public int size() \{
+    return elements.length;
+\}
+\nwendcode{}\nwbegindocs{8}\nwdocspar
+
+\nwenddocs{}\nwbegincode{9}\sublabel{NW2xbAX4-2KcLCY-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2xbAX4-2KcLCY-1}}}\moddef{Տարրերի հասանելիություն~{\nwtagstyle{}\subpageref{NW2xbAX4-2KcLCY-1}}}\endmoddef\nwalsodefined{\\{NW2xbAX4-2KcLCY-2}}\nwused{\\{NW2xbAX4-3DSt5d-1}}
+public E get(int index) \{
+    return elements[index];
+\}
+\nwendcode{}\nwbegindocs{10}\nwdocspar
+
+\nwenddocs{}\nwbegincode{11}\sublabel{NW2xbAX4-2KcLCY-2}\nwmargintag{{\nwtagstyle{}\subpageref{NW2xbAX4-2KcLCY-2}}}\moddef{Տարրերի հասանելիություն~{\nwtagstyle{}\subpageref{NW2xbAX4-2KcLCY-1}}}\plusendmoddef
+public void set(int index, E value) \{
+    elements[index] = value;
+\}
+\nwendcode{}\nwbegindocs{12}\nwdocspar
+
+\nwenddocs{}\nwbegincode{13}\sublabel{NW2xbAX4-MMD3K.2-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2xbAX4-MMD3K.2-1}}}\moddef{Գծային որոնում~{\nwtagstyle{}\subpageref{NW2xbAX4-MMD3K.2-1}}}\endmoddef\nwused{\\{NW2xbAX4-3DSt5d-1}}
+public int search(E value) \{
+    for( int i = 0; i < size(); ++i )
+        if( get(i).equals(value) )
+            return i;
+    
+    return -1;
+\}
+\nwendcode{}\nwbegindocs{14}\nwdocspar
+
+\nwenddocs{}\nwbegincode{15}\sublabel{NW2xbAX4-MMD3K.3-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2xbAX4-MMD3K.3-1}}}\moddef{Բինար որոնում~{\nwtagstyle{}\subpageref{NW2xbAX4-MMD3K.3-1}}}\endmoddef\nwused{\\{NW2xbAX4-3DSt5d-1}}
+public int binarySearch(E value) \{
+    return binarySearchHelper(0, size()-1, value);
+\}
+
+private int binarySearchHelper(int l, int r, E v) \{
+    int m = (l + r) / 2;
+    if( m == v ) return 0;
+\}
+\nwendcode{}
+
+\nwixlogsorted{c}{{Array1D դասը}{NW2xbAX4-3DSt5d-1}{\nwixd{NW2xbAX4-3DSt5d-1}}}%
+\nwixlogsorted{c}{{Բինար որոնում}{NW2xbAX4-MMD3K.3-1}{\nwixu{NW2xbAX4-3DSt5d-1}\nwixd{NW2xbAX4-MMD3K.3-1}}}%
+\nwixlogsorted{c}{{Գծային որոնում}{NW2xbAX4-MMD3K.2-1}{\nwixu{NW2xbAX4-3DSt5d-1}\nwixd{NW2xbAX4-MMD3K.2-1}}}%
+\nwixlogsorted{c}{{Զանգվածի տարրերի քանակը}{NW2xbAX4-11VMew-1}{\nwixu{NW2xbAX4-3DSt5d-1}\nwixd{NW2xbAX4-11VMew-1}}}%
+\nwixlogsorted{c}{{Կոնստրուկտոր}{NW2xbAX4-0-1}{\nwixu{NW2xbAX4-3DSt5d-1}\nwixd{NW2xbAX4-0-1}}}%
+\nwixlogsorted{c}{{Տարրերի զանգված}{NW2xbAX4-MMD3K-1}{\nwixu{NW2xbAX4-3DSt5d-1}\nwixd{NW2xbAX4-MMD3K-1}}}%
+\nwixlogsorted{c}{{Տարրերի հասանելիություն}{NW2xbAX4-2KcLCY-1}{\nwixu{NW2xbAX4-3DSt5d-1}\nwixd{NW2xbAX4-2KcLCY-1}\nwixd{NW2xbAX4-2KcLCY-2}}}%
+\nwbegindocs{16}\nwdocspar
+
+\nwenddocs{}

@@ -1,3 +1,5 @@
+/book/structures/*.java
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
