@@ -1,0 +1,12 @@
+/structures
+
+*.log
+*.eps
+structures.toc
+structures.aux
+strucfig.mpx
+ch01-array-impl.tex
+ch02-singly-linked.tex
+ch02-doubly-linked.tex
+ch03-binary-search-tree.tex
+ch03-balancing-bst.tex

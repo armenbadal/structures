@@ -28,12 +28,13 @@ code:
 
 
 clean:
-	rm *.log
-	rm *.eps
-	rm structures.toc
-	rm structures.aux
-	rm strucfig.mpx
-	rm ch02-singly-linked.tex
-	rm ch02-doubly-linked.tex
-	rm ch03-binary-search-tree.tex
-	rm ch03-balancing-bst.tex
+	rm -f *.log
+	rm -f *.eps
+	rm -f structures.toc
+	rm -f structures.aux
+	rm -f strucfig.mpx
+	rm -f ch01-array-impl.tex
+	rm -f ch02-singly-linked.tex
+	rm -f ch02-doubly-linked.tex
+	rm -f ch03-binary-search-tree.tex
+	rm -f ch03-balancing-bst.tex
